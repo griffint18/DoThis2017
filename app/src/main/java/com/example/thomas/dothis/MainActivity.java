@@ -22,6 +22,7 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<String> arrayList;
+    //ArrayList<doItEvent> arrayList;
     ArrayAdapter<String> arrayAdapter;
 
     SharedPreferences mPrefs;

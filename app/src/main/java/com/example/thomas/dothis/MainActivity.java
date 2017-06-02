@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_EDIT_EXISTING);
             }
         });
-        System.out.println("change");
         int count = mPrefs.getInt("count", 0);
         for (Integer i = 1; i <= count; i++) {
             arrayList.add(mPrefs.getString(i.toString(), ""));

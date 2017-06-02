@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         for (Integer i = 1; i <= count; i++) {
             arrayList.add(mPrefs.getString(i.toString(), ""));
         }
-        System.out.println("test for gitHub from mac");
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(arrayAdapter);
     }

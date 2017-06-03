@@ -6,12 +6,17 @@ package com.example.thomas.dothis;
 
 
 public class doItEvent {
+
     public enum doItEventCategory {
         SCHOOL, WORK, PLAY, ENTERTAINMENT, OTHER
     }
+
     private String title = "Title";
     private String location = "Location";
     private doItEventCategory category = doItEventCategory.OTHER;
+    private int minutes = 0;
+    private int hours = 0;
+    private final String COLON = ":";
 
     @Override
     public String toString() {
@@ -41,4 +46,22 @@ public class doItEvent {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+
 }

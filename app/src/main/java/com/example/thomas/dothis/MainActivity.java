@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, EditMessageClass.class);
-                intent.putExtra(Intent_Constants.INTENT_MESSAGE_DATA, arrayList.get(position));
+                intent.setClass(MainActivity.this, EditClass.class);
+                intent.putExtra(Intent_Constants.INTENT_TITLE_DATA, arrayList.get(position));
                 intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION, position);
                 startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_EDIT_EXISTING);
             }
@@ -96,13 +96,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String messageText;
+        String titleText;
+        String locationText;
         if(resultCode == Intent_Constants.INTENT_REQUEST_ADD_NEW) {
-            messageText = data.getStringExtra(Intent_Constants.INTENT_MESSAGE_FIELD);
+            titleText = data.getStringExtra(Intent_Constants.INTENT_TITLE_FIELD);
+            locationText = data.getStringExtra(Intent_Constants.INTENT_LOCATION_FIELD);
+            System.out.println("Location text = " + locationText);
+            doItEvent event = new doItEvent();
+            event.setTitle(titleText);
+            event.setLocation(locationText);
             System.out.println("before add, arraylist size is " + arrayList.size());
             System.out.println("before add, arrayAdapter size is " + arrayAdapter.getCount());
-            System.out.println(messageText);
-            arrayList.add(messageText);
+            //arrayList.add(titleText);
+            //arrayList.add(locationText);
             System.out.println("after add, arraylist size is " + arrayList.size());
             System.out.println("after add, arrayAdapter size is " + arrayAdapter.getCount());
             if (arrayAdapter == null) {
@@ -114,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else if (resultCode == Intent_Constants.INTENT_REQUEST_EDIT_EXISTING){
-            messageText = data.getStringExtra(Intent_Constants.INTENT_CHANGED_MESSAGE);
+            titleText = data.getStringExtra(Intent_Constants.INTENT_CHANGED_TITLE);
             int position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
             if (position != -1) {
-                arrayList.remove(position);
-                arrayList.add(position, messageText);
+                //arrayList.remove(position);
+                //arrayList.add(position, titleText);
                 arrayAdapter.notifyDataSetChanged();
             }
         }

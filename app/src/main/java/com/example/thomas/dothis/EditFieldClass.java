@@ -15,12 +15,14 @@ public class EditFieldClass extends AppCompatActivity {
     }
 
     public void saveButtonClicked(View v) {
-        String messageText = ((EditText) findViewById(R.id.message)).getText().toString();
-        if (messageText.equals("")) {
+        String titleText = ((EditText) findViewById(R.id.title)).getText().toString();
+        String locationText = ((EditText) findViewById(R.id.location)).getText().toString();
+        if (titleText.equals("") || locationText.equals("")) {
 
         } else{
             Intent intent = new Intent();
-            intent.putExtra(Intent_Constants.INTENT_MESSAGE_FIELD, messageText);
+            intent.putExtra(Intent_Constants.INTENT_TITLE_FIELD, titleText);
+            intent.putExtra(Intent_Constants.INTENT_LOCATION_FIELD, locationText);
             setResult(Intent_Constants.INTENT_RESULT_CODE, intent);
             finish();
         }

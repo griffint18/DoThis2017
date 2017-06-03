@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <EditText
+        android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
-        android:id="@+id/message"
-        android:hint="Write your message"
-        android:textSize="20sp"
-        android:gravity="top"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:gravity="top"
+        android:hint="Title"
+        android:textSize="15sp"
+        tools:layout_height="50dp" />
+    <EditText
+        android:id="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:gravity="top"
+        android:hint="Location"
+        android:textSize="15sp"
+        tools:layout_height="50dp"
+        />
     <Button
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight=".02"
         android:text="Save"
         android:textSize="20sp"
         android:onClick="saveButtonClicked"/>

@@ -17,4 +17,7 @@ public class Intent_Constants {
     public final static String INTENT_ITEM_POSITION = "item_position";
     public final static String INTENT_CHANGED_TITLE = "changed_title";
     public final static String INTENT_CHANGED_LOCATION = "changed_location";
+    public final static String INTENT_DATE_DAY = "day";
+    public final static String INTENT_DATE_MONTH = "month";
+    public final static String INTENT_DATE_YEAR = "year";
 }

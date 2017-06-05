@@ -2,16 +2,18 @@ package com.example.thomas.dothis;
 // https://www.youtube.com/watch?v=duHKgfl21BU
 // 4:11
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.app.DatePickerDialog;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -21,7 +23,7 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
-    ArrayList<String> arrayList;
+    ArrayList<doItEvent> arrayList;
     //ArrayList<doItEvent> arrayList;
     ArrayAdapter<String> arrayAdapter;
 
@@ -45,10 +47,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_EDIT_EXISTING);
             }
         });
-        int count = mPrefs.getInt("count", 0);
-        for (Integer i = 1; i <= count; i++) {
-            arrayList.add(mPrefs.getString(i.toString(), ""));
-        }
+
+//        int count = mPrefs.getInt("count", 0);
+//        for (Integer i = 1; i <= count; i++) {
+//            arrayList.add(mPrefs.getString(i.toString(), ""));
+//        }
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(arrayAdapter);
     }
@@ -91,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
     public void onClickAddNew(View v) {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, EditFieldClass.class);
+        doItEvent event = new doItEvent();
+        intent.putExtra("NewEvent", event);
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_ADD_NEW);
     }
 
@@ -98,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String titleText;
         String locationText;
+        int day;
+        int month;
+        int year;
         if(resultCode == Intent_Constants.INTENT_REQUEST_ADD_NEW) {
             titleText = data.getStringExtra(Intent_Constants.INTENT_TITLE_FIELD);
             locationText = data.getStringExtra(Intent_Constants.INTENT_LOCATION_FIELD);
@@ -105,6 +113,12 @@ public class MainActivity extends AppCompatActivity {
             doItEvent event = new doItEvent();
             event.setTitle(titleText);
             event.setLocation(locationText);
+            data.getIntExtra(Intent_Constants.INTENT_DATE_DAY, day);
+            data.getIntExtra(Intent_Constants.INTENT_DATE_MONTH, month);
+            data.getIntExtra(Intent_Constants.INTENT_DATE_YEAR, year);
+
+            event.setStartDT(new GregorianCalendar(year, month, day));
+
             System.out.println("before add, arraylist size is " + arrayList.size());
             System.out.println("before add, arrayAdapter size is " + arrayAdapter.getCount());
             //arrayList.add(titleText);

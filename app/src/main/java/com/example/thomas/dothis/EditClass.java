@@ -11,8 +11,7 @@ import android.widget.EditText;
  */
 
 public class EditClass extends AppCompatActivity {
-    String titleText;
-    String locationText;
+
     int position;
 
     @Override
@@ -22,16 +21,15 @@ public class EditClass extends AppCompatActivity {
         setContentView(R.layout.do_this_layout);
         Intent intent = getIntent();
 
-        titleText = intent.getStringExtra(Intent_Constants.INTENT_TITLE_DATA);
-        position = intent.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
-        EditText titleData = (EditText) findViewById(R.id.title);
-        titleData.setText(titleText);
 
-        locationText = intent.getStringExtra(Intent_Constants.INTENT_LOCATION_DATA);
-        position = intent.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
-        EditText locationData = (EditText) findViewById(R.id.location);
-        locationData.setText(locationText);
 
+//        position = intent.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
+//        EditText titleData = (EditText) findViewById(R.id.title);
+//        titleData.setText(event.getTitle());
+//
+//        position = intent.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
+//        EditText locationData = (EditText) findViewById(R.id.location);
+//        locationData.setText(event.getLocation());
     }
 
     public void saveButtonClicked(View v) {

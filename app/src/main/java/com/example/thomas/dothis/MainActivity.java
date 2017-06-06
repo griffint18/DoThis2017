@@ -41,10 +41,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, EditClass.class);
-                intent.putExtra(Intent_Constants.INTENT_TITLE_DATA, arrayList.get(position));
-                intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION, position);
-                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_EDIT_EXISTING);
+                intent.setClass(MainActivity.this, EditFieldClass.class);
+                doItEvent event = arrayList.get(position);
+                arrayList.remove(position);
+                if (event != null) {
+                    System.out.println("event is not null");
+                    intent.putExtra("NewEvent", event);
+                    intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION, position);
+                    startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_EDIT_EXISTING);
+//                    arrayList.add(position, event);
+                }
+//                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_ADD_NEW);
+//                intent.putExtra(Intent_Constants.INTENT_TITLE_DATA, arrayList.get(position));
+
+            }
+
+
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                arrayList.remove(position);
+                arrayAdapter.notifyDataSetChanged();
+                return true;
             }
         });
 
@@ -82,15 +103,15 @@ public class MainActivity extends AppCompatActivity {
 
         super.onStop();
     }
-/*
-    @Override
-    protected void onStart() {
-        super.onStart();
-        System.out.println("in onStart, arrayList size is " + arrayList.size());
-        // Retrieve the stored list
-        arrayList.clear();
-    }
-*/
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        System.out.println("in onStart, arrayList size is " + arrayList.size());
+//        // Retrieve the stored list
+//        arrayList.clear();
+//    }
+
     public void onClickAddNew(View v) {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, EditFieldClass.class);
@@ -121,8 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
             System.out.println("before add, arraylist size is " + arrayList.size());
             System.out.println("before add, arrayAdapter size is " + arrayAdapter.getCount());
-            //arrayList.add(titleText);
-            //arrayList.add(locationText);
 
             arrayList.add(event);
 

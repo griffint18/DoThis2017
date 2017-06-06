@@ -20,16 +20,6 @@ public class EditClass extends AppCompatActivity {
         System.out.println("In the EditClass");
         setContentView(R.layout.do_this_layout);
         Intent intent = getIntent();
-
-
-
-//        position = intent.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
-//        EditText titleData = (EditText) findViewById(R.id.title);
-//        titleData.setText(event.getTitle());
-//
-//        position = intent.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
-//        EditText locationData = (EditText) findViewById(R.id.location);
-//        locationData.setText(event.getLocation());
     }
 
     public void saveButtonClicked(View v) {

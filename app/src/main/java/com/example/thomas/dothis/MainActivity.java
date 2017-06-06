@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<doItEvent> arrayList;
     //ArrayList<doItEvent> arrayList;
-    ArrayAdapter<String> arrayAdapter;
+    CustomAdapter arrayAdapter;
 
     SharedPreferences mPrefs;
     //String mString = mPrefs.getString("tag", "default_value_if_variable_not_found");
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //        for (Integer i = 1; i <= count; i++) {
 //            arrayList.add(mPrefs.getString(i.toString(), ""));
 //        }
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
+        arrayAdapter = new CustomAdapter(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(arrayAdapter);
     }
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         mEditor.clear();
         mEditor.putInt("count", arrayList.size());
         for (Integer i = 1; i <= arrayList.size(); i++) {
-            mEditor.putString(i.toString(), arrayList.get(i-1)).commit();
+            //mEditor.putString(i.toString(), arrayList.get(i-1)).commit();
         }
 
         super.onStop();
@@ -103,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String titleText;
         String locationText;
-        int day;
-        int month;
-        int year;
+        int day = 0;
+        int month = 0;
+        int year = 0;
         if(resultCode == Intent_Constants.INTENT_REQUEST_ADD_NEW) {
             titleText = data.getStringExtra(Intent_Constants.INTENT_TITLE_FIELD);
             locationText = data.getStringExtra(Intent_Constants.INTENT_LOCATION_FIELD);
@@ -123,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("before add, arrayAdapter size is " + arrayAdapter.getCount());
             //arrayList.add(titleText);
             //arrayList.add(locationText);
+
+            arrayList.add(event);
+
             System.out.println("after add, arraylist size is " + arrayList.size());
             System.out.println("after add, arrayAdapter size is " + arrayAdapter.getCount());
             if (arrayAdapter == null) {

@@ -33,7 +33,6 @@ public class EditFieldClass extends AppCompatActivity {
 
         EditText locationData = (EditText) findViewById(R.id.location);
         locationData.setText(event.getLocation());
-
     }
 
     public void saveButtonClicked(View v) {

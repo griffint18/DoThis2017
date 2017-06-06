@@ -16,8 +16,8 @@ public class doItEvent implements Serializable {
         SCHOOL, WORK, PLAY, ENTERTAINMENT, OTHER
     }
 
-    private String title = "Title t";
-    private String location = "Location l";
+    private String title;
+    private String location;
     private doItEventCategory category = doItEventCategory.OTHER;
     private final String COLON = ":";
 
@@ -25,7 +25,8 @@ public class doItEvent implements Serializable {
 
     @Override
     public String toString() {
-        return getTitle();
+        String s = "Title: " + getTitle() + ", Location: " + getLocation();
+        return s;
     }
 
     public doItEventCategory getCategory() {

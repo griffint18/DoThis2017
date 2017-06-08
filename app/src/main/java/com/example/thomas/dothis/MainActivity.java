@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("NewEvent", event);
                     intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION, position);
                     startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_EDIT_EXISTING);
-//                    arrayList.add(position, event);
+                    arrayList.add(position, event);
                 }
 //                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_ADD_NEW);
 //                intent.putExtra(Intent_Constants.INTENT_TITLE_DATA, arrayList.get(position));
@@ -122,5 +122,47 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String titleText;
+        String locationText;
+        int day = 0;
+        int month = 0;
+        int year = 0;
+        if(resultCode == Intent_Constants.INTENT_REQUEST_ADD_NEW) {
+            titleText = data.getStringExtra(Intent_Constants.INTENT_TITLE_FIELD);
+            locationText = data.getStringExtra(Intent_Constants.INTENT_LOCATION_FIELD);
+            System.out.println("Location text = " + locationText);
+            doItEvent event = new doItEvent();
+            event.setTitle(titleText);
+            event.setLocation(locationText);
+            data.getIntExtra(Intent_Constants.INTENT_DATE_DAY, day);
+            data.getIntExtra(Intent_Constants.INTENT_DATE_MONTH, month);
+            data.getIntExtra(Intent_Constants.INTENT_DATE_YEAR, year);
+
+            event.setStartDT(new GregorianCalendar(year, month, day));
+
+            System.out.println("before add, arraylist size is " + arrayList.size());
+            System.out.println("before add, arrayAdapter size is " + arrayAdapter.getCount());
+
+            arrayList.add(event);
+
+            System.out.println("after add, arraylist size is " + arrayList.size());
+            System.out.println("after add, arrayAdapter size is " + arrayAdapter.getCount());
+            if (arrayAdapter == null) {
+                System.out.println("arrayAdapter is nothing");
+            } else {
+                arrayAdapter.notifyDataSetChanged();
+            }
+            System.out.println("done");
+        }
+
+        else if (resultCode == Intent_Constants.INTENT_REQUEST_EDIT_EXISTING){
+            titleText = data.getStringExtra(Intent_Constants.INTENT_CHANGED_TITLE);
+            int position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
+            if (position != -1) {
+                //arrayList.remove(position);
+                //arrayList.add(position, titleText);
+                arrayAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }

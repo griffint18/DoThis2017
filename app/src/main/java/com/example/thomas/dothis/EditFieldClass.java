@@ -48,6 +48,8 @@ public class EditFieldClass extends AppCompatActivity {
             intent.putExtra(Intent_Constants.INTENT_DATE_DAY, event.getStartDT().DAY_OF_MONTH);
             intent.putExtra(Intent_Constants.INTENT_DATE_MONTH, event.getStartDT().MONTH);
             intent.putExtra(Intent_Constants.INTENT_DATE_YEAR, event.getStartDT().YEAR);
+            intent.putExtra(Intent_Constants.INTENT_TIME_HOUR, event.getStartDT().HOUR);
+            intent.putExtra(Intent_Constants.INTENT_TIME_MINUTE, event.getStartDT().MINUTE);
             setResult(Intent_Constants.INTENT_RESULT_CODE, intent);
             finish();
         }

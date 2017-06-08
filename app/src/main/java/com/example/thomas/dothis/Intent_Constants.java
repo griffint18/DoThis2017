@@ -20,4 +20,6 @@ public class Intent_Constants {
     public final static String INTENT_DATE_DAY = "day";
     public final static String INTENT_DATE_MONTH = "month";
     public final static String INTENT_DATE_YEAR = "year";
+    public final static String INTENT_TIME_HOUR = "hour";
+    public final static String INTENT_TIME_MINUTE= "minute";
 }

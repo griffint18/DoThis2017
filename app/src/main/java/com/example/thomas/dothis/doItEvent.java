@@ -21,11 +21,12 @@ public class doItEvent implements Serializable {
     private doItEventCategory category = doItEventCategory.OTHER;
     private final String COLON = ":";
 
+
     private GregorianCalendar startDT;
 
     @Override
     public String toString() {
-        String s = "Title: " + getTitle() + ", Location: " + getLocation();
+        String s = "Title: " + getTitle() + ", Location: " + getLocation() + ", On: " + startDT.MONTH + startDT.DAY_OF_MONTH + ", " + startDT.YEAR + " at: " + startDT.HOUR + COLON + startDT.MINUTE;
         return s;
     }
 

@@ -8,19 +8,23 @@ import android.widget.TimePicker;
 import android.text.format.DateFormat;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  * Created by Thomas on 6/7/2017.
  */
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-
+    GregorianCalendar event;
+    Calendar c;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Bundle args = getArguments();
-        Calendar c = Calendar.getInstance();
+        c = Calendar.getInstance();
 
-        int hour = args.getInt("hour", c.get(Calendar.HOUR_OF_DAY));
-        int minute = args.getInt("minute", c.get(Calendar.MINUTE));
+        int hour = c.get(event.HOUR);
+        int minute = c.get(event.MINUTE);
+
+        System.out.println("The hour is: " + hour + " the minute is: " + minute);
 
         return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
     }

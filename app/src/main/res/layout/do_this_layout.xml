@@ -23,17 +23,27 @@
         android:textSize="15sp"
         tools:layout_height="50dp"
         />
+
+    <Button
+        android:id="@+id/showTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="showTimePicker"
+        android:text="Pick time"
+        android:textSize="15sp" />
+
     <Button
         android:id="@+id/showDate"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".02"
+        android:onClick="showDatePicker"
         android:text="Pick date"
-        android:textSize="15sp"
-        android:onClick="showDatePicker"/>
+        android:textSize="15sp" />
+
     <Button
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="20dp"
         android:layout_weight=".02"
         android:text="Save"
         android:textSize="20sp"

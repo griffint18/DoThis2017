@@ -61,4 +61,13 @@ public class EditFieldClass extends AppCompatActivity {
         fragment.show(getSupportFragmentManager(), "datePicker");
         System.out.println("In showDatePicker after shown fragment");
     }
+
+    public void showTimePicker(View v) {
+        DialogFragment fragment = new TimePickerFragment();
+        Intent intent = new Intent();
+        intent.setClass(this, EditFieldClass.class);
+        intent.putExtra("EventT", event);
+        fragment.show(getSupportFragmentManager(), "timePicker");
+        System.out.println("In showTimePicker after shown fragment");
+    }
 }

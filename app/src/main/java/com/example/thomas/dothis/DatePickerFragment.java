@@ -21,7 +21,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker
 
-        Calendar c = Calendar.getInstance();
+        c = Calendar.getInstance();
 
         System.out.println("In the onCreate");
 

@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class EditFieldClass extends AppCompatActivity {
     doItEvent event;
+
+    public doItEvent getEvent() {
+        return event;
+    }
 
     public void setStartDT(GregorianCalendar c) {
         event.setStartDT(c);
@@ -45,11 +50,13 @@ public class EditFieldClass extends AppCompatActivity {
             Intent intent = new Intent();
             intent.putExtra(Intent_Constants.INTENT_TITLE_FIELD, titleText);
             intent.putExtra(Intent_Constants.INTENT_LOCATION_FIELD, locationText);
-            intent.putExtra(Intent_Constants.INTENT_DATE_DAY, event.getStartDT().DAY_OF_MONTH);
-            intent.putExtra(Intent_Constants.INTENT_DATE_MONTH, event.getStartDT().MONTH);
-            intent.putExtra(Intent_Constants.INTENT_DATE_YEAR, event.getStartDT().YEAR);
-            intent.putExtra(Intent_Constants.INTENT_TIME_HOUR, event.getStartDT().HOUR);
-            intent.putExtra(Intent_Constants.INTENT_TIME_MINUTE, event.getStartDT().MINUTE);
+            int day = event.getStartDT().get(Calendar.DAY_OF_MONTH);
+            intent.putExtra(Intent_Constants.INTENT_DATE_DAY, day);
+            System.out.println("Day: " + day);
+            intent.putExtra(Intent_Constants.INTENT_DATE_MONTH, event.getStartDT().get(Calendar.MONTH));
+            intent.putExtra(Intent_Constants.INTENT_DATE_YEAR, event.getStartDT().get(Calendar.YEAR));
+            intent.putExtra(Intent_Constants.INTENT_TIME_HOUR, event.getStartDT().get(Calendar.HOUR_OF_DAY));
+            intent.putExtra(Intent_Constants.INTENT_TIME_MINUTE, event.getStartDT().get(Calendar.MINUTE));
             setResult(Intent_Constants.INTENT_RESULT_CODE, intent);
             finish();
         }
@@ -57,19 +64,22 @@ public class EditFieldClass extends AppCompatActivity {
 
     public void showDatePicker(View v) {
         DialogFragment fragment = new DatePickerFragment();
-        Intent intent = new Intent();
-        intent.setClass(this, EditFieldClass.class);
-        intent.putExtra("EventDT", event);
+        Bundle bundle = new Bundle();
+        bundle.putInt("year", event.getStartDT().get(Calendar.YEAR));
+        bundle.putInt("month", event.getStartDT().get(Calendar.MONTH));
+        bundle.putInt("day", event.getStartDT().get(Calendar.DAY_OF_MONTH));
+
+        fragment.setArguments(bundle);
         fragment.show(getSupportFragmentManager(), "datePicker");
-        System.out.println("In showDatePicker after shown fragment");
     }
 
     public void showTimePicker(View v) {
         DialogFragment fragment = new TimePickerFragment();
-        Intent intent = new Intent();
-        intent.setClass(this, EditFieldClass.class);
-        intent.putExtra("EventT", event);
+        Bundle bundle = new Bundle();
+        bundle.putInt("hour", event.getStartDT().get(Calendar.HOUR_OF_DAY));
+        bundle.putInt("minute", event.getStartDT().get(Calendar.MINUTE));
+
+        fragment.setArguments(bundle);
         fragment.show(getSupportFragmentManager(), "timePicker");
-        System.out.println("In showTimePicker after shown fragment");
     }
 }

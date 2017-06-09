@@ -124,35 +124,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String titleText;
         String locationText;
-        int day = 0;
-        int month = 0;
-        int year = 0;
+        int day;
+        int month;
+        int year;
+        int hour;
+        int minute;
         if(resultCode == Intent_Constants.INTENT_REQUEST_ADD_NEW) {
             titleText = data.getStringExtra(Intent_Constants.INTENT_TITLE_FIELD);
             locationText = data.getStringExtra(Intent_Constants.INTENT_LOCATION_FIELD);
+            System.out.println("In onactivityresult");
+
             System.out.println("Location text = " + locationText);
             doItEvent event = new doItEvent();
             event.setTitle(titleText);
             event.setLocation(locationText);
-            data.getIntExtra(Intent_Constants.INTENT_DATE_DAY, day);
-            data.getIntExtra(Intent_Constants.INTENT_DATE_MONTH, month);
-            data.getIntExtra(Intent_Constants.INTENT_DATE_YEAR, year);
 
-            event.setStartDT(new GregorianCalendar(year, month, day));
+            day = data.getIntExtra(Intent_Constants.INTENT_DATE_DAY, 0);
+            System.out.println("Day= " + day);
 
-            System.out.println("before add, arraylist size is " + arrayList.size());
-            System.out.println("before add, arrayAdapter size is " + arrayAdapter.getCount());
+            month = data.getIntExtra(Intent_Constants.INTENT_DATE_MONTH, 0);
+            year = data.getIntExtra(Intent_Constants.INTENT_DATE_YEAR, 0);
+            hour = data.getIntExtra(Intent_Constants.INTENT_TIME_HOUR, 0);
+            minute = data.getIntExtra(Intent_Constants.INTENT_TIME_MINUTE, 0);
+            System.out.println("The year is: " + year + " the month is: " + month + " the day is: " + day);
+            event.setStartDT(new GregorianCalendar(year, month, day, hour, minute));
 
             arrayList.add(event);
-
-            System.out.println("after add, arraylist size is " + arrayList.size());
-            System.out.println("after add, arrayAdapter size is " + arrayAdapter.getCount());
             if (arrayAdapter == null) {
                 System.out.println("arrayAdapter is nothing");
             } else {
                 arrayAdapter.notifyDataSetChanged();
             }
-            System.out.println("done");
         }
 
         else if (resultCode == Intent_Constants.INTENT_REQUEST_EDIT_EXISTING){

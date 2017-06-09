@@ -15,14 +15,14 @@ import java.util.GregorianCalendar;
  */
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-    GregorianCalendar event;
-    Calendar c;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        c = Calendar.getInstance();
 
-        int hour = c.get(event.HOUR);
-        int minute = c.get(event.MINUTE);
+        super.onCreateDialog(savedInstanceState);
+
+        int hour = getArguments().getInt("hour");
+        int minute = getArguments().getInt("minute");
 
         System.out.println("The hour is: " + hour + " the minute is: " + minute);
 
@@ -32,5 +32,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         System.out.println("Hour: " + hourOfDay + " Minutes: " + minute);
+//        GregorianCalendar gc = new GregorianCalendar()
     }
 }

@@ -52,12 +52,15 @@ public class CustomAdapter extends ArrayAdapter<doItEvent> {
             System.out.println("About to get to convertView");
             TextView t = (TextView) convertView.findViewById(R.id.eventTitle);
             TextView l = (TextView) convertView.findViewById(R.id.eventLocation);
-
+            TextView dt = (TextView) convertView.findViewById(R.id.eventDateTime);
             if (t != null) {
                 t.setText(item.getTitle());
             }
             if (l != null) {
                 l.setText(item.getLocation());
+            }
+            if (dt != null) {
+                dt.setText(item.getDateTime());
             }
         }
         return convertView;

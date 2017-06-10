@@ -1,6 +1,7 @@
 package com.example.thomas.dothis;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.io.Serializable;
 //import java.sql.Time;
@@ -15,6 +16,7 @@ import java.util.GregorianCalendar;
 
 
 public class doItEvent implements Serializable {
+//    private SharedPreferences mPrefs;
 
     public enum doItEventCategory {
         SCHOOL, WORK, PLAY, ENTERTAINMENT, OTHER
@@ -55,6 +57,31 @@ public class doItEvent implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public void saveData(SharedPreferences mPrefs, String index) {
+        //this.mPrefs = d;
+        mPrefs.edit().putString(index + "_Location", location).apply();
+        String savedLocation;
+        mPrefs.getString(index+ "_Location", "");
+        mPrefs.edit().putString(index + "_Title", title).apply();
+        mPrefs.edit().putInt(index + "_Year", startDT.get(Calendar.YEAR)).apply();
+        mPrefs.edit().putInt(index + "_Month", startDT.get(Calendar.MONTH)).apply();
+        mPrefs.edit().putInt(index + "_Day", startDT.get(Calendar.DAY_OF_MONTH)).apply();
+        mPrefs.edit().putInt(index + "_Hour", startDT.get(Calendar.HOUR_OF_DAY)).apply();
+        mPrefs.edit().putInt(index + "_Minute", startDT.get(Calendar.MINUTE)).apply();
+    }
+
+    public void readData(SharedPreferences mPrefs, String index) {
+//        this.mPrefs = d;
+        this.location = mPrefs.getString(index + "_Location", "");
+        this.title = mPrefs.getString(index + "_Title", "");
+        int year = mPrefs.getInt(index + "_Year", startDT.get(Calendar.YEAR));
+        int month = mPrefs.getInt(index + "_Month", startDT.get(Calendar.MONTH));
+        int day = mPrefs.getInt(index + "_Day", startDT.get(Calendar.DAY_OF_MONTH));
+        int hour = mPrefs.getInt(index + "_Hour", startDT.get(Calendar.HOUR_OF_DAY));
+        int minute = mPrefs.getInt(index + "_Minute", startDT.get(Calendar.MINUTE));
+        this.startDT = new GregorianCalendar(year, month, day, hour, minute);
     }
 
     public GregorianCalendar getStartDT() {

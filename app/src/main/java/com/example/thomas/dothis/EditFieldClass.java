@@ -18,16 +18,20 @@ public class EditFieldClass extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("in the editFieldClass");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.do_this_layout);
         event = (doItEvent) getIntent().getSerializableExtra("NewEvent");
-
+        if (event != null) {
+            System.out.println("Event is not null");
+        } else System.out.println("is null");
         EditText titleData = (EditText) findViewById(R.id.title);
         titleData.setText(event.getTitle());
 
         EditText locationData = (EditText) findViewById(R.id.location);
         locationData.setText(event.getLocation());
 
+        //remember where the event was in the list
         pos = getIntent().getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
 
     }

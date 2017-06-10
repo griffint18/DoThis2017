@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         arrayList = new ArrayList<>();
 
-        mPrefs = getSharedPreferences("DoThis", MODE_PRIVATE);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
@@ -34,8 +33,11 @@ public class MainActivity extends AppCompatActivity {
                 intent.setClass(MainActivity.this, EditFieldClass.class);
                 doItEvent event = arrayList.get(position);
                 if (event != null) {
+                    System.out.println("Event not null");
                     intent.putExtra("NewEvent", event);
+                    System.out.println("Event was serialized");
                     intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION, position);
+                    System.out.println("Intent was edited");
                     startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_EDIT_EXISTING);
                 }
             }
@@ -53,12 +55,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        int count = mPrefs.getInt("count", 0);
-//        for (Integer i = 1; i <= count; i++) {
-//            arrayList.add(mPrefs.getString(i.toString(), ""));
+        mPrefs = getSharedPreferences("DoThis", MODE_PRIVATE);
+        int count = mPrefs.getInt("count", 0);
+        System.out.println("onCreate count = " + count);
+        for (Integer i = 1; i <= count; i++) {
+            doItEvent e = new doItEvent();
+            e.readData(mPrefs, i.toString());
+            arrayList.add(e);
+        }
+
+//        for (Integer i = 1; i <= arrayList.size(); i++) {
+//            doItEvent e = arrayList.get(i-1);
+//            e.saveData(mEditor, i.toString());
+//            //mEditor.putString(i.toString(), arrayList.get(i-1)).commit();
 //        }
+
         arrayAdapter = new CustomAdapter(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(arrayAdapter);
+        arrayAdapter.notifyDataSetChanged();
     }
 
 //    @Override
@@ -80,9 +94,12 @@ public class MainActivity extends AppCompatActivity {
         // Store current list
         SharedPreferences.Editor mEditor = mPrefs.edit();
         mEditor.clear();
-        mEditor.putInt("count", arrayList.size());
+
+        mEditor.putInt("count", arrayList.size()).apply();
+        System.out.println("onStop count = " + arrayList.size());
         for (Integer i = 1; i <= arrayList.size(); i++) {
-            //mEditor.putString(i.toString(), arrayList.get(i-1)).commit();
+            doItEvent e = arrayList.get(i-1);
+            e.saveData(mPrefs, i.toString());
         }
 
         super.onStop();

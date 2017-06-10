@@ -16,7 +16,8 @@ import java.util.GregorianCalendar;
  */
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-
+    private int hour;
+    private int minute;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker
@@ -26,7 +27,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int year = getArguments().getInt("year");
         int month = getArguments().getInt("month");
         int day = getArguments().getInt("day");
-
+        hour = getArguments().getInt("hour");
+        minute = getArguments().getInt("minute");
         System.out.println("The year is: " + year + " the month is: " + month + " the day is: " + day);
 
         // Create a new instance of DatePickerDialog and return it
@@ -35,10 +37,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         System.out.println("Day: " + day + " Month: " + month + " Year: " + year);
-        GregorianCalendar gc = new GregorianCalendar(year, month, day);
+        GregorianCalendar gc = new GregorianCalendar(year, month, day, hour, minute);
 
         doItEvent e = ((EditFieldClass) getActivity()).getEvent();
 
-        e.setStartDate(gc);
+        e.setStartDT(gc);
     }
 }

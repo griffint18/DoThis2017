@@ -15,7 +15,9 @@ import java.util.GregorianCalendar;
  */
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-
+    private int year;
+    private int month;
+    private int day;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -23,7 +25,9 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
         int hour = getArguments().getInt("hour");
         int minute = getArguments().getInt("minute");
-
+        year = getArguments().getInt("year");
+        month = getArguments().getInt("month");
+        day = getArguments().getInt("day");
         System.out.println("The hour is: " + hour + " the minute is: " + minute);
 
         return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
@@ -32,6 +36,10 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         System.out.println("Hour: " + hourOfDay + " Minutes: " + minute);
-//        GregorianCalendar gc = new GregorianCalendar()
+        GregorianCalendar gc = new GregorianCalendar(year, month, day, hourOfDay, minute);
+
+        doItEvent e = ((EditFieldClass) getActivity()).getEvent();
+
+        e.setStartDT(gc);
     }
 }

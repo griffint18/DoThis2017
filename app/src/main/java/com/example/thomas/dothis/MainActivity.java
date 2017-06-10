@@ -1,30 +1,20 @@
 package com.example.thomas.dothis;
-// https://www.youtube.com/watch?v=duHKgfl21BU
-// 4:11
-import android.app.Dialog;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.app.DatePickerDialog;
-import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<doItEvent> arrayList;
-    //ArrayList<doItEvent> arrayList;
     CustomAdapter arrayAdapter;
 
     SharedPreferences mPrefs;
@@ -43,17 +33,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, EditFieldClass.class);
                 doItEvent event = arrayList.get(position);
-                arrayList.remove(position);
                 if (event != null) {
-                    System.out.println("event is not null");
                     intent.putExtra("NewEvent", event);
                     intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION, position);
                     startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_EDIT_EXISTING);
-                    arrayList.add(position, event);
                 }
-//                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_ADD_NEW);
-//                intent.putExtra(Intent_Constants.INTENT_TITLE_DATA, arrayList.get(position));
-
             }
 
 
@@ -117,54 +101,58 @@ public class MainActivity extends AppCompatActivity {
         intent.setClass(MainActivity.this, EditFieldClass.class);
         doItEvent event = new doItEvent();
         intent.putExtra("NewEvent", event);
+        intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_ADD_NEW);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String titleText;
-        String locationText;
-        int day;
-        int month;
-        int year;
-        int hour;
-        int minute;
-        if(resultCode == Intent_Constants.INTENT_REQUEST_ADD_NEW) {
-            titleText = data.getStringExtra(Intent_Constants.INTENT_TITLE_FIELD);
-            locationText = data.getStringExtra(Intent_Constants.INTENT_LOCATION_FIELD);
-            System.out.println("In onactivityresult");
+        doItEvent event = null;
+        if (resultCode == Intent_Constants.INTENT_RESULT_CODE) {
+            if(requestCode == Intent_Constants.INTENT_REQUEST_ADD_NEW) {
+                event = new doItEvent();
+            }
 
-            System.out.println("Location text = " + locationText);
-            doItEvent event = new doItEvent();
-            event.setTitle(titleText);
-            event.setLocation(locationText);
-
-            day = data.getIntExtra(Intent_Constants.INTENT_DATE_DAY, 0);
-            System.out.println("Day= " + day);
-
-            month = data.getIntExtra(Intent_Constants.INTENT_DATE_MONTH, 0);
-            year = data.getIntExtra(Intent_Constants.INTENT_DATE_YEAR, 0);
-            hour = data.getIntExtra(Intent_Constants.INTENT_TIME_HOUR, 0);
-            minute = data.getIntExtra(Intent_Constants.INTENT_TIME_MINUTE, 0);
-            System.out.println("The year is: " + year + " the month is: " + month + " the day is: " + day);
-            event.setStartDT(new GregorianCalendar(year, month, day, hour, minute));
-
-            arrayList.add(event);
-            if (arrayAdapter == null) {
-                System.out.println("arrayAdapter is nothing");
-            } else {
-                arrayAdapter.notifyDataSetChanged();
+            else if (requestCode == Intent_Constants.INTENT_REQUEST_EDIT_EXISTING){
+                int position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
+                if (position != -1) {
+                    event = arrayList.get(position);
+                }
             }
         }
 
-        else if (resultCode == Intent_Constants.INTENT_REQUEST_EDIT_EXISTING){
-            titleText = data.getStringExtra(Intent_Constants.INTENT_CHANGED_TITLE);
+        if (event != null) {
+            updateEventPostEdit(event, data, requestCode);
+        }
+    }
+
+    private void updateEventPostEdit(doItEvent e, Intent data, int requestCode) {
+        String titleText = data.getStringExtra(Intent_Constants.INTENT_TITLE_FIELD);
+        String locationText = data.getStringExtra(Intent_Constants.INTENT_LOCATION_FIELD);
+
+        int day = data.getIntExtra(Intent_Constants.INTENT_DATE_DAY, 0);
+        int month = data.getIntExtra(Intent_Constants.INTENT_DATE_MONTH, 0);
+        int year = data.getIntExtra(Intent_Constants.INTENT_DATE_YEAR, 0);
+        int hour = data.getIntExtra(Intent_Constants.INTENT_TIME_HOUR, 0);
+        int minute = data.getIntExtra(Intent_Constants.INTENT_TIME_MINUTE, 0);
+        e.setStartDT(new GregorianCalendar(year, month, day, hour, minute));
+        e.setTitle(titleText);
+        e.setLocation(locationText);
+
+        if(requestCode == Intent_Constants.INTENT_REQUEST_ADD_NEW) {
+            arrayList.add(e);
+        } else if (requestCode == Intent_Constants.INTENT_REQUEST_EDIT_EXISTING) {
             int position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
             if (position != -1) {
-                //arrayList.remove(position);
-                //arrayList.add(position, titleText);
-                arrayAdapter.notifyDataSetChanged();
+                arrayList.remove(position);
+                arrayList.add(position, e);
             }
+        }
+
+        if (arrayAdapter == null) {
+
+        } else {
+            arrayAdapter.notifyDataSetChanged();
         }
     }
 }

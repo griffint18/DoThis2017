@@ -11,7 +11,10 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Thomas on 6/5/2017.
@@ -60,7 +63,10 @@ public class CustomAdapter extends ArrayAdapter<doItEvent> {
                 l.setText(item.getLocation());
             }
             if (dt != null) {
-                dt.setText(item.getDateTime());
+                SimpleDateFormat fmt = new SimpleDateFormat("MMM dd, yyyy h:mm a");
+                Date d = item.getStartDT().getTime();
+                String dateString = fmt.format(d);
+                dt.setText(dateString);
             }
         }
         return convertView;

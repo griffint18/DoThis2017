@@ -65,17 +65,9 @@ public class doItEvent implements Serializable {
         this.startDT = startDT;
     }
 
-    public void setStartDate(GregorianCalendar d) {
-        startDT.set(d.get(Calendar.YEAR), d.get(Calendar.MONTH), d.get(Calendar.DAY_OF_MONTH));
-    }
-
-    public void setStartTime(GregorianCalendar t) {
-        startDT.set(t.HOUR_OF_DAY, t.MINUTE);
-    }
-
-    public void printTime() {
-        System.out.println(startDT.HOUR_OF_DAY + COLON + startDT.MINUTE + " " + startDT.AM_PM);
-    }
+//    public void setStartDate(GregorianCalendar d) {
+//        startDT.set(d.get(Calendar.YEAR), d.get(Calendar.MONTH), d.get(Calendar.DAY_OF_MONTH), d.get(Calendar.HOUR_OF_DAY), d.get(Calendar.MINUTE));
+//    }
 
     public String getDateTime() {
         StringBuilder s = new StringBuilder();

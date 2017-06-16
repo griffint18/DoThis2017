@@ -9,6 +9,7 @@ import android.widget.EditText;
  * Created by Thomas on 6/3/2017.
  */
 
+// Edits the location field
 public class EditLocationClass extends AppCompatActivity {
     String locationText;
     int position;
@@ -16,7 +17,6 @@ public class EditLocationClass extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("In the EditLocationClass");
         setContentView(R.layout.do_this_layout);
         Intent intent = getIntent();
         locationText = intent.getStringExtra(Intent_Constants.INTENT_LOCATION_DATA);
@@ -26,7 +26,6 @@ public class EditLocationClass extends AppCompatActivity {
     }
 
     public void saveButtonClicked(View v) {
-        System.out.println("In the EditLocationClass");
         String changedLocationText = ((EditText) findViewById(R.id.location)).getText().toString();
         Intent intent = new Intent();
         intent.putExtra(Intent_Constants.INTENT_CHANGED_LOCATION, changedLocationText);

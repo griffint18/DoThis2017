@@ -16,26 +16,22 @@ public class EditFieldClass extends AppCompatActivity {
         return event;
     }
 
+    // Recreate the edit page to edit currently stored data
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("in the editFieldClass");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.do_this_layout);
         event = (doItEvent) getIntent().getSerializableExtra("NewEvent");
-        if (event != null) {
-            System.out.println("Event is not null");
-        } else System.out.println("is null");
         EditText titleData = (EditText) findViewById(R.id.title);
         titleData.setText(event.getTitle());
 
         EditText locationData = (EditText) findViewById(R.id.location);
         locationData.setText(event.getLocation());
 
-        //remember where the event was in the list
         pos = getIntent().getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
-
     }
 
+    // Save the newly edited fields
     public void saveButtonClicked(View v) {
         String titleText = ((EditText) findViewById(R.id.title)).getText().toString();
         String locationText = ((EditText) findViewById(R.id.location)).getText().toString();
@@ -57,6 +53,7 @@ public class EditFieldClass extends AppCompatActivity {
         }
     }
 
+    // Method to show the date picking widget
     public void showDatePicker(View v) {
         DialogFragment fragment = new DatePickerFragment();
         Bundle bundle = dateTimeData();
@@ -64,6 +61,7 @@ public class EditFieldClass extends AppCompatActivity {
         fragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+    // Method to show the time picking widget
     public void showTimePicker(View v) {
         DialogFragment fragment = new TimePickerFragment();
         Bundle bundle = dateTimeData();
@@ -71,6 +69,7 @@ public class EditFieldClass extends AppCompatActivity {
         fragment.show(getSupportFragmentManager(), "timePicker");
     }
 
+    // Bundle created to store info that helps ship around the data
     private Bundle dateTimeData(){
         Bundle bundle = new Bundle();
         bundle.putInt("year", event.getStartDT().get(Calendar.YEAR));

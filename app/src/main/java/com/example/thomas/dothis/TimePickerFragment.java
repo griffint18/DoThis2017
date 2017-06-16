@@ -18,9 +18,11 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     private int year;
     private int month;
     private int day;
+
+    // Code executed when button to select time is pressed
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
+        // Use the current time as the default time in the picker
         super.onCreateDialog(savedInstanceState);
 
         int hour = getArguments().getInt("hour");
@@ -28,18 +30,16 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         year = getArguments().getInt("year");
         month = getArguments().getInt("month");
         day = getArguments().getInt("day");
-        System.out.println("The hour is: " + hour + " the minute is: " + minute);
 
+        // Create a new instance of TimePickerDialog and return it
         return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
     }
 
+    // Performs the code when the time has been set
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        System.out.println("Hour: " + hourOfDay + " Minutes: " + minute);
         GregorianCalendar gc = new GregorianCalendar(year, month, day, hourOfDay, minute);
-
         doItEvent e = ((EditFieldClass) getActivity()).getEvent();
-
         e.setStartDT(gc);
     }
 }

@@ -16,9 +16,9 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<doItEvent> arrayList;
     CustomAdapter arrayAdapter;
-
     SharedPreferences mPrefs;
-    //String mString = mPrefs.getString("tag", "default_value_if_variable_not_found");
+
+    // Execute this code upon startup
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
-
+        // Remove item from list upon long press
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -55,64 +55,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Create the sharedPreferences to store the data
         mPrefs = getSharedPreferences("DoThis", MODE_PRIVATE);
         int count = mPrefs.getInt("count", 0);
-        System.out.println("onCreate count = " + count);
         for (Integer i = 1; i <= count; i++) {
             doItEvent e = new doItEvent();
             e.readData(mPrefs, i.toString());
             arrayList.add(e);
         }
 
-//        for (Integer i = 1; i <= arrayList.size(); i++) {
-//            doItEvent e = arrayList.get(i-1);
-//            e.saveData(mEditor, i.toString());
-//            //mEditor.putString(i.toString(), arrayList.get(i-1)).commit();
-//        }
-
+        // Link the listView to the custom adapter
         arrayAdapter = new CustomAdapter(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(arrayAdapter);
         arrayAdapter.notifyDataSetChanged();
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        try {
-//            PrintWriter pw = new PrintWriter(openFileOutput("Todo.txt", Context.MODE_PRIVATE));
-//            for(String data : arrayList) {
-//                pw.println(data);
-//            }
-//            pw.close();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        finish();
-//    }
-
+    // Save the data upon stoppage of the app
     @Override
     protected void onStop() {
         // Store current list
         SharedPreferences.Editor mEditor = mPrefs.edit();
         mEditor.clear();
-
         mEditor.putInt("count", arrayList.size()).apply();
-        System.out.println("onStop count = " + arrayList.size());
+
         for (Integer i = 1; i <= arrayList.size(); i++) {
             doItEvent e = arrayList.get(i-1);
             e.saveData(mPrefs, i.toString());
         }
-
         super.onStop();
     }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        System.out.println("in onStart, arrayList size is " + arrayList.size());
-//        // Retrieve the stored list
-//        arrayList.clear();
-//    }
-
+    // Executes when the "+" button is pressed on the main screen
     public void onClickAddNew(View v) {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, EditFieldClass.class);
@@ -122,9 +94,11 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_ADD_NEW);
     }
 
+    // Save is pressed, return here and execute the code
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         doItEvent event = null;
+
         if (resultCode == Intent_Constants.INTENT_RESULT_CODE) {
             if(requestCode == Intent_Constants.INTENT_REQUEST_ADD_NEW) {
                 event = new doItEvent();
@@ -143,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Update the event after editing the existing one
     private void updateEventPostEdit(doItEvent e, Intent data, int requestCode) {
         String titleText = data.getStringExtra(Intent_Constants.INTENT_TITLE_FIELD);
         String locationText = data.getStringExtra(Intent_Constants.INTENT_LOCATION_FIELD);
@@ -169,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         if (arrayAdapter == null) {
 
         } else {
+            //Refresh the view
             arrayAdapter.notifyDataSetChanged();
         }
     }

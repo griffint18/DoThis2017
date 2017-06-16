@@ -24,14 +24,17 @@ public class CustomAdapter extends ArrayAdapter<doItEvent> {
 
     ViewHolder viewHolder = new ViewHolder();
 
+    // Default constructor
     private static class ViewHolder {
         private LinearLayout linearLayout;
     }
 
+    // New custom adapter to link with arrayList
     public CustomAdapter(Context context, int textViewResourceId, ArrayList<doItEvent> items) {
         super(context, textViewResourceId, items);
     }
 
+    // Define the view as getView and present the list
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
@@ -47,12 +50,6 @@ public class CustomAdapter extends ArrayAdapter<doItEvent> {
 
         doItEvent item = getItem(position);
         if (item!= null) {
-            // do whatever you want with your string and long
-//            TextView t = (TextView) viewHolder.linearLayout.findViewById(R.id.eventTitle);
-//            t.setText(item.getTitle());
-//            t = (TextView) viewHolder.linearLayout.findViewById(R.id.eventLocation);
-//            t.setText(item.getLocation());
-            System.out.println("About to get to convertView");
             TextView t = (TextView) convertView.findViewById(R.id.eventTitle);
             TextView l = (TextView) convertView.findViewById(R.id.eventLocation);
             TextView dt = (TextView) convertView.findViewById(R.id.eventDateTime);

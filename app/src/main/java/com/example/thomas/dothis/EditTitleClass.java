@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+// Edits the title field
 public class EditTitleClass extends AppCompatActivity {
     String titleText;
     int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("In the EditTitleClass");
         setContentView(R.layout.do_this_layout);
         Intent intent = getIntent();
         titleText = intent.getStringExtra(Intent_Constants.INTENT_TITLE_DATA);
@@ -23,8 +23,6 @@ public class EditTitleClass extends AppCompatActivity {
     }
 
     public void saveButtonClicked(View v) {
-        System.out.println("In the EditTitleClass");
-
         String changedMessageText = ((EditText)findViewById(R.id.title)).getText().toString();
         Intent intent = new Intent();
         intent.putExtra(Intent_Constants.INTENT_CHANGED_TITLE, changedMessageText);
